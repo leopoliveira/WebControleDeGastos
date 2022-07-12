@@ -46,11 +46,11 @@ Também foram utilizados:
 
 **Receitas:**
 
-![image](https://user-images.githubusercontent.com/35302072/178387554-3e58b1e3-cd23-4b4e-b6e3-7edd7a0ffadb.png)
+![image](https://user-images.githubusercontent.com/35302072/178388334-e1c47e6d-6226-4ed0-a956-6798436fb82d.png)
 
 **Despesas:**
 
-![image](https://user-images.githubusercontent.com/35302072/178387602-6e9a0fb3-fea7-4e06-bbcd-02b9dcf2a036.png)
+![image](https://user-images.githubusercontent.com/35302072/178388302-105efafa-be36-4231-a927-a47a440ec35f.png)
 
 **Categorias:**
 
