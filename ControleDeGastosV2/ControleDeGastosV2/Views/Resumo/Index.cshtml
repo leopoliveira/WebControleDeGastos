@@ -1,0 +1,174 @@
+﻿@model ResumoViewModel
+@{
+    ViewData["Title"] = "Resumo";
+    var nomeUsuario = ViewContext.HttpContext.User.Identity.Name;
+
+    int horaAtual = DateTime.Now.Hour;
+    var saudacao = "Bom dia!";
+
+    if (horaAtual >= 6 && horaAtual <= 12)
+    {
+        saudacao = "Bom Dia";
+    }
+    else if (horaAtual > 12 && horaAtual <= 18)
+    {
+        saudacao = "Boa Tarde";
+    }
+    else
+    {
+        saudacao = "Boa Noite";
+    }
+
+}
+
+
+
+<div class="container-sm">
+
+    <div class="row">
+        <div class="col-lg-auto align-items-end">
+            <h1>@saudacao, @nomeUsuario!</h1>
+        </div>
+
+        <hr />
+
+    </div>
+
+    <partial name="_Messages" />
+
+    <div class="row g-3 fs-5">
+
+        <!-- Resumo Carteiras -->
+        <div class="col-sm-4">
+            <a class="text-decoration-none" asp-controller="Carteira" asp-action="Index">
+                <div class="card text-center">
+
+                    <div class="card-header bg-primary bg-opacity-25">
+                        <p><i class="fa-solid fa-wallet"></i> Saldo</p>
+                    </div>
+
+                    <div class="card-body">
+                        @if (Model.Carteiras.Count() > 0)
+                        {
+                            if (Model.Carteiras.Sum(c => c.Saldo) < 0)
+                            {
+                                <p class="text-danger">@Model.Carteiras.Sum(c => c.Saldo).ToString("C2") <span title="Saldo Negativo!" class="text-danger"><i class="fa-solid fa-triangle-exclamation"></i></span></p>
+                            }
+                            else
+                            {
+                                <p>@Model.Carteiras.Sum(c => c.Saldo).ToString("C2")</p>
+                            }
+
+                        }
+                        else
+                        {
+                            <p>R$ 0.00</p>
+                        }
+                    </div>
+
+                </div>
+            </a>
+        </div>
+
+        <!-- Resumo Receitas -->
+        <div class="col-sm-4">
+            <a class="text-decoration-none text-success" asp-controller="Receita" asp-action="Index" asp-route-mes="@DateTime.Now.Month">
+                <div class="card text-center">
+
+                    <div class="card-header bg-success bg-opacity-25">
+                        <p><i class="fa-solid fa-sack-dollar"></i> Receitas</p>
+                    </div>
+
+                    <div class="card-body">
+                        @if (Model.Receitas.Count() > 0)
+                        {
+                            <p>@Model.Receitas.Sum(c => c.Valor).ToString("C2")</p>
+                        }
+                        else
+                        {
+                            <p>R$ 0.00</p>
+                        }
+                    </div>
+
+                </div>
+            </a>
+        </div>
+
+        <!-- Resumo Despesas -->
+        <div class="col-sm-4">
+            <a class="text-decoration-none text-danger" asp-controller="Despesa" asp-action="Index" asp-route-mes="@DateTime.Now.Month">
+                <div class="card text-center">
+
+                    <div class="card-header bg-danger bg-opacity-25">
+                        <p><i class="fa-solid fa-receipt"></i> Despesas</p>
+                    </div>
+
+                    <div class="card-body">
+                        @if (Model.Despesas.Count() > 0)
+                        {
+                            <p>@Model.Despesas.Sum(c => c.Valor).ToString("C2")</p>
+                        }
+                        else
+                        {
+                            <p>R$ 0.00</p>
+                        }
+                    </div>
+
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+
+</div>
+
+<!-- Gráficos -->
+
+<div class="mt-5 container-sm">
+    <div class="col-sm-12">
+        <canvas id="graficos" width="400" height="150" aria-label="Gráficos de Receitas x Despesas"></canvas>
+    </div>  
+</div>
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
+    <script>
+        const ctx = document.getElementById('graficos').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Receitas', 'Despesas'],
+                datasets: [{
+                    label: 'Valores em R$',
+                    data: [@Model.Receitas.Sum(r => r.Valor), @Model.Despesas.Sum(d => d.Valor)],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    //borderWidth: 3
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        display: false
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Receitas e Despesas - Desde o Início'
+                    }
+                },
+                aspectRatio: 2
+            }
+        });
+    </script>
+}

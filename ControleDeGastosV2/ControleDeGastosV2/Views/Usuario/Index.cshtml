@@ -1,0 +1,67 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container-sm">
+
+    <div class="row g-lg-3 text-center">
+        <div class="col-lg-3">
+            <h1>
+                Bem - Vindo!
+            </h1>
+        </div>
+    </div>
+
+    <hr />
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <partial name="_Messages" />
+
+    <div class="mt-5 container">
+
+        <div class="row">
+
+            <div class="offset-lg-4 col-lg-4">
+                <form method="post" asp-controller="Usuario" asp-action="Login">
+                    <input hidden asp-for="ReturnUrl" />
+                    <div class="form-group">
+                        <label asp-for="Usuario" class="form-label">Usuário:</label>
+                        <input asp-for="Usuario" class="form-control" autofocus />
+                        <span asp-validation-for="@Model.Usuario" class="alert-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Senha" class="form-label mt-2">Senha:</label>
+                        <input type="password" asp-for="Senha" class="form-control" />
+                        <span asp-validation-for="@Model.Senha" class="alert-danger"></span>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <div class="form-check">
+                            <input asp-for="LembraDeMim" class="form-check-input" />
+                            <label asp-for="LembraDeMim" class="form-check-label">Lembrar de mim?</label>
+                            <span asp-validation-for="LembraDeMim" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="mt-4 btn btn-lg btn-primary">Login</button>
+                </form>
+
+                <div class="row mt-4">
+                    <a class="text-decoration-none text-black" asp-action="Cadastrar">
+                        Ainda não tem uma conta?
+                        <span class="btn btn-outline-primary btn-sm">Cadastre-se</span>
+                    </a>
+                    @*<a class="text-decoration-none text-black mt-3" asp-action="RedefinirSenha">
+                        Esqueceu sua senha?
+                        <span class="btn btn-outline-primary btn-sm">Redefinir Senha</span>
+                    </a>*@
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

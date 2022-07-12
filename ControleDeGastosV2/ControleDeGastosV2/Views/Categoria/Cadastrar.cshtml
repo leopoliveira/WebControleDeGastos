@@ -1,0 +1,67 @@
+﻿@model Categoria
+@{
+    string acao = ViewContext.RouteData.Values["id"] != null ? "Editar" : "Criar";
+}
+
+
+<div class="container">
+
+    <div class="row g-lg-3 text-center">
+        <div class="col-lg-4">
+            <h1>
+                @acao Categoria
+            </h1>
+        </div>
+
+        <div class="col-lg-4 offset-lg-4">
+            <a class="btn btn-lg btn-danger" asp-action="Index">Cancelar</a>
+        </div>
+
+    </div>
+
+    <hr />
+
+    <!-- Div para receber os erros de ModeState.AddModelError -->
+    <div asp-validation-summary="ModelOnly" class="validation-summary text-danger mb-3">
+
+    </div>
+
+    <partial name="_Messages" />
+
+    <div class="mt-3 row">
+        <form method="post" asp-controller="Categoria" asp-action="Cadastrar" class="row g-3">
+            <input hidden asp-for="CategoriaId" />
+            @*<input hidden asp-for="IdUsuario" />*@
+
+            <div class="col-lg-5 form-group">
+                <label asp-for="Nome" class="form-label">Nome:</label>
+                <input asp-for="Nome" class="form-control" autofocus />
+                <span asp-validation-for="Nome" class="alert-danger"></span>
+            </div>
+
+            <div class="col-lg-1 form-group">
+                <label asp-for="CorHexaDecimal" class="form-label">Data:</label>
+                <input type="color" asp-for="CorHexaDecimal" class="form-control color-picker" />
+                <span asp-validation-for="CorHexaDecimal" class="alert-danger"></span>
+            </div>
+
+            <div class="form-row">
+                <div class="form-check">
+                    <input maxlength="80" placeholder="Origem da Receita" asp-for="IsDepesa" class="form-check-input" autofocus />
+                    <label asp-for="IsDepesa" class="form-check-label">Categoria de Despesas?</label>
+                </div>
+                <div class="form-check">
+                    <input maxlength="80" placeholder="Origem da Receita" asp-for="IsReceita" class="form-check-input" autofocus />
+                    <label asp-for="IsReceita" class="form-check-label">Categoria de Receitas?</label>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-lg-4 form-group">
+                    <button type="submit" class="btn btn-lg btn-primary">@acao</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

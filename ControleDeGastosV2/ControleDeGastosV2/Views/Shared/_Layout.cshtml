@@ -1,0 +1,92 @@
+﻿@{ 
+    //Pega o nome do Controller atual
+    var Controller = ViewContext.RouteData.Values["controller"].ToString();
+
+    bool autenticado = false;
+
+    if (Context.User.Identity.IsAuthenticated)
+    {
+        autenticado = true;
+    }
+
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/images/favicon.ico" />
+
+    <!-- Importando CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <!-- FontsAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3 fs-5">
+            <div class="container-fluid">
+                @if(autenticado)
+                {
+                    <a class="navbar-brand" asp-area="" asp-controller="Resumo" asp-action="Index"><img src="~/images/logo.png" style="width:2rem; height:100%"/></a>
+                }
+                else
+                {
+                    <a class="navbar-brand" asp-area="" asp-controller="Usuario" asp-action="Index"><img src="~/images/logo.png" style="width:2rem; height:100%" /></a>
+                }
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (autenticado)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Resumo" asp-action="Index">Início</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Carteira" asp-action="Index">Carteiras</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Receita" asp-action="Index" asp-route-mes="@DateTime.Now.Month">Receitas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Despesa" asp-action="Index" asp-route-mes="@DateTime.Now.Month">Despesas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Categoria" asp-action="Index">Categorias</a>
+                            </li>
+                        }
+                    </ul>
+                    @if(autenticado)
+                    {
+                        <span class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Logout">Logout</a>
+                        </span>
+                    }
+                    
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container mt-5">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

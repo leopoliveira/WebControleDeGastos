@@ -1,0 +1,106 @@
+﻿@model Receita
+@{
+    string acao = ViewContext.RouteData.Values["id"] != null ? "Editar" : "Criar";
+    var carteiras = ViewData["Carteiras"] != null ? (IEnumerable<Carteira>)ViewData["Carteiras"] : null;
+    var categorias = ViewData["Categorias"] != null ? (IEnumerable<Categoria>)ViewData["Categorias"] : null;
+}
+
+
+<div class="container">
+
+    <div class="row g-lg-3 text-center">
+        <div class="col-lg-4">
+            <h1>
+                @acao Receita
+            </h1>
+        </div>
+
+        <div class="col-lg-4 offset-lg-4">
+            <a class="btn btn-lg btn-danger" asp-action="Index">Cancelar</a>
+        </div>
+
+    </div>
+
+    <hr />
+
+    <!-- Div para receber os erros de ModeState.AddModelError -->
+    <div asp-validation-summary="ModelOnly" class="validation-summary text-danger mb-3">
+
+    </div>
+
+    <partial name="_Messages" />
+
+    <div class="mt-3 row">
+        <form method="post" asp-controller="Receita" asp-action="Cadastrar" class="row g-3">
+            <input hidden asp-for="ReceitaId" />
+
+            <div class="col-lg-1 form-group">
+                <label asp-for="Valor" class="form-label">Valor:</label>
+                <input asp-for="Valor" class="form-control" autofocus />
+                <span asp-validation-for="Valor" class="alert-danger"></span>
+            </div>
+
+            <div class="col-lg-2 form-group">
+                <label asp-for="DataReceita" class="form-label">Data:</label>
+                <input type="date" asp-for="DataReceita" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            </div>
+
+            <div class="col-lg-4 form-group">
+                <label asp-for="CarteiraId" class="form-label">Carteira:</label>
+                @if (carteiras != null)
+                {
+                    <select asp-for="CarteiraId" class="form-select">
+
+                        @foreach (Carteira carteira in carteiras)
+                        {
+                        <option value="@carteira.CarteiraId">
+                            @carteira.Nome
+                        </option>
+                        }
+
+                    </select>
+                }
+                else
+                {
+                    <p>Nenhuma carteira cadastrada!</p>
+                }
+
+
+            </div>
+
+            <div class="col-lg-4 form-group">
+                <label asp-for="CategoriaId" class="form-label">Categoria:</label>
+                @if (categorias != null)
+                {
+                    <select asp-for="CategoriaId" class="form-select">
+                        @foreach (Categoria categoria in categorias)
+                        {
+                            <option value="@categoria.CategoriaId">
+                                @categoria.Nome
+                            </option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    <p>Nenhuma categoria cadastrada!</p>
+                }
+
+            </div>
+
+            <div class="col-lg-11 form-group">
+                <label asp-for="Descricao" class="form-label">Descrição:</label>
+                <input maxlength="80" placeholder="Origem da Receita" asp-for="Descricao" class="form-control" autofocus />
+                <span asp-validation-for="Descricao" class="alert-danger"></span>
+            </div>
+
+            <div class="form-row">
+                <div class="col-lg-4 form-group">
+                    <button type="submit" class="btn btn-lg btn-primary">@acao</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</div>

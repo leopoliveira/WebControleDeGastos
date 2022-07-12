@@ -1,0 +1,144 @@
+﻿@model DespesaViewModel
+@{
+    ViewData["Title"] = "Despesas";
+    int despesaViewModel = ViewData["MesAtual"] == null ? DateTime.Now.Month : (int)ViewData["MesAtual"];
+}
+
+<div class="container-sm">
+    <div class="row g-lg-3 text-center">
+
+        <div class="col-lg-6">
+            <h1 class="text-danger">
+                Despesas Totais: @Model.Despesas.Sum(r => r.Valor).ToString("C2")
+            </h1>
+        </div>
+
+        <div class="offset-lg-2 col-lg-2 mb-2">
+            <a class="btn btn-lg btn-primary text-nowrap" asp-action="Index" asp-controller="Carteira">Carteiras</a>
+        </div>
+
+        <div class="col-lg-2 mb-2">
+            <a class="btn btn-lg btn-outline-danger text-nowrap" asp-action="Cadastrar">Nova Despesa</a>
+        </div>
+
+    </div>
+
+    <hr />
+
+    <partial name="_Messages" />
+
+    <div class="row g-lg-3 mt-4">
+
+        <!-- Filtros -->
+        <div class="accordion" id="filtros">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="filtrosAccordion">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filtrosAccordionCollapse" aria-expanded="false" aria-controls="filtrosAccordionCollapse">
+                        <strong>Filtros</strong>
+                    </button>
+                </h2>
+                <div id="filtrosAccordionCollapse" class="accordion-collapse collapse" aria-labelledby="filtrosAccordion" data-bs-parent="#filtros">
+                    <div class="accordion-body">
+                        <form method="GET" asp-action="Index" asp-controller="Despesa" class="row g-lg-4">
+                            <div class="col-lg-4 form-group">
+                                <label for="carteiraFiltro" class="form-label">Carteira:</label>
+                                <select name="carteiraFiltro" id="carteiraFiltro" class="form-select">
+                                    <option selected value="">Nenhuma</option>
+                                    @if (Model.Carteiras.Count() > 0)
+                                    {
+                                        foreach (Carteira carteira in Model.Carteiras)
+                                        {
+                                            <option value="@carteira.Nome">@carteira.Nome</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-lg-4 form-group">
+                                <label for="categoriaFiltro" class="form-label">Categoria:</label>
+                                <select name="categoriaFiltro" id="categoriaFiltro" class="form-select">
+                                    <option selected value="">Nenhuma</option>
+                                    @if (Model.Categorias.Count() > 0)
+                                    {
+                                        foreach (Categoria categoria in Model.Categorias)
+                                        {
+                                            <option value="@categoria.Nome">@categoria.Nome</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-lg-2 form-group">
+                                <label for="dataInicio" class="form-label">Data Início:</label>
+                                <input type="date" id="dataInicio" name="dataInicial" class="form-control" />
+                            </div>
+                            <div class="col-lg-2 form-group">
+                                <label for="dataFim" class="form-label">Data Fim:</label>
+                                <input type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="dataFim" name="dataFinal" class="form-control" />
+                            </div>
+                            <div class="col-lg-12 form-group">
+                                <button type="submit" class="btn btn-lg btn-success">Filtrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <!-- Paginação -->
+            <nav aria-label="pagination pagination-lg">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a asp-action="Index" asp-controller="Despesa" asp-route-mes="@(Model.MesAtual - 1)" class="page-link"><</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link fw-bold bg-opacity-10 bg-black">
+                            @DateTime.Parse("01/" + Model.MesAtual + "/" + DateTime.Now.Year).ToString("MMMM").ToUpper()
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a asp-action="Index" asp-controller="Despesa" asp-route-mes="@(Model.MesAtual + 1)" class="page-link">></a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="table-responsive-lg">
+                <table class="table table-hover tabela-desprec">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="fw-bold text-center">Data</th>
+                            <th scope="col" class="fw-bold text-center">Descrição</th>
+                            <th scope="col" class="fw-bold text-center">Categoria</th>
+                            <th scope="col" class="fw-bold text-center">Carteira</th>
+                            <th scope="col" class="fw-bold text-center">Valor</th>
+                            <th scope="col" class="fw-bold text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Despesas.Count() > 0)
+                        {
+                            foreach (Despesa despesa in Model.Despesas)
+                            {
+                                <tr class="text-danger fs-6">
+                                    <td class="align-middle text-center">@despesa.DataDespesa.ToString("dd/MMM/yyyy")</td>
+                                    <td class="align-middle text-center">@despesa.Descricao</td>
+                                    <td class="align-middle text-center" style="color: @despesa.Categoria.CorHexaDecimal">@despesa.Categoria.Nome</td>
+                                    <td class="align-middle text-center" style="color: @despesa.Carteira.CorHexaDecimal">@despesa.Carteira.Nome</td>
+                                    <td class="align-middle text-center">@despesa.Valor.ToString("C2")</td>
+                                    <td class="align-middle text-center">
+                                        <a class="btn btn-lg btn-outline-danger" asp-action="Deletar" asp-route-id="@despesa.DespesaId">
+                                            Apagar
+                                        </a>
+                                        <a class="btn btn-lg btn-outline-primary" asp-action="Cadastrar" asp-route-id="@despesa.DespesaId">
+                                            Editar
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>

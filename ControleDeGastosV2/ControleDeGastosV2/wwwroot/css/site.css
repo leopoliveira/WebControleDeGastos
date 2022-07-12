@@ -1,0 +1,53 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.color-picker {
+    margin: 0;
+    padding: 0;
+}
+
+.validation-summary ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tabela-categorias tr > th:last-child,
+.tabela-categorias tr > td:last-child,
+.tabela-categorias tr > th:nth-child(3),
+.tabela-categorias tr > td:nth-child(3),
+.tabela-categorias tr > th:nth-child(4),
+.tabela-categorias tr > td:nth-child(4) {
+    width: 1%;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.tabela-desprec tr > th:last-child,
+.tabela-desprec tr > td:last-child,
+.tabela-desprec tr > th:nth-child(3),
+.tabela-desprec tr > td:nth-child(3),
+.tabela-desprec tr > th:nth-child(4),
+.tabela-desprec tr > td:nth-child(4),
+.tabela-desprec tr > th:nth-child(5),
+.tabela-desprec tr > td:nth-child(5) {
+    width: 1%;
+    white-space: nowrap;
+    text-align: center;
+}

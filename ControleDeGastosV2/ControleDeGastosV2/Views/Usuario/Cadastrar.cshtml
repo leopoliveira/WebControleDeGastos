@@ -1,0 +1,64 @@
+﻿@model LoginViewModel
+@{
+    var acao = ViewContext.RouteData.Values["uid"] != null ? "Editar" : "Registrar";
+    ViewData["Title"] = acao;
+}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-auto align-items-end">
+            <h1>@acao Usuário</h1>
+        </div>
+
+        <hr />
+
+    </div>
+
+    <!-- Div para receber os erros de ModeState.AddModelError -->
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3">
+
+    </div>
+
+    <partial name="_Messages" />
+
+    <div class="mt-2 row justify-content-center">
+        <div class="col-lg-6 justify-content-center">
+            <form method="post" asp-controller="Usuario" asp-action="Cadastrar">
+
+                <label asp-for="Usuario" class="form-label">Usuário:</label>
+                <input asp-for="Usuario" class="form-control" autofocus />
+                <span asp-validation-for="@Model.Usuario" class="alert-danger"></span>
+
+                @if (acao == "Registrar")
+                {
+                    <label asp-for="Senha" class="form-label mt-2">Senha:</label>
+                    <input asp-for="Senha" class="form-control" />
+                    <span asp-validation-for="@Model.Senha" class="alert-danger"></span>
+
+                    <label asp-for="ConfirmarSenha" class="form-label mt-2">Confirmar Senha:</label>
+                    <input asp-for="ConfirmarSenha" class="form-control" />
+                    <span asp-validation-for="@Model.ConfirmarSenha" class="alert-danger"></span>
+                }
+
+                <div class="row mt-4">
+                    <div class="col-lg-auto">
+                        <a asp-action="Index" class="btn btn-lg btn-danger">Cancelar</a>
+                        <button type="submit" class="btn btn-lg btn-primary">@acao</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="row mt-4">
+                <a class="text-decoration-none text-black" asp-action="Index">
+                    Já possui uma conta?
+                    <span class="btn btn-outline-primary btn-sm">Fazer Login</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
