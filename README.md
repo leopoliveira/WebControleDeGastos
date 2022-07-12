@@ -34,15 +34,15 @@ Também foram utilizados:
 
 ![image](https://user-images.githubusercontent.com/35302072/178387711-799eb2b8-88c0-4530-a585-cff76a9979aa.png)
 
-**Receitas**
+**Receitas:**
 
 ![image](https://user-images.githubusercontent.com/35302072/178387554-3e58b1e3-cd23-4b4e-b6e3-7edd7a0ffadb.png)
 
-**Despesas**
+**Despesas:**
 
 ![image](https://user-images.githubusercontent.com/35302072/178387602-6e9a0fb3-fea7-4e06-bbcd-02b9dcf2a036.png)
 
-**Categorias**
+**Categorias:**
 
 ![image](https://user-images.githubusercontent.com/35302072/178387648-a41adef9-0902-475d-897d-cbf950a97704.png)
 
