@@ -27,18 +27,23 @@ Também foram utilizados:
 ## Telas
 
 **Login:**
+
 ![image](https://user-images.githubusercontent.com/35302072/178387463-ca432135-5a9c-4fe6-8d89-37ba24bebca6.png)
 
 **Resumo:**
-![image](https://user-images.githubusercontent.com/35302072/178387518-968220a8-726b-4992-81b0-bcb1f2e57ce3.png)
+
+![image](https://user-images.githubusercontent.com/35302072/178387711-799eb2b8-88c0-4530-a585-cff76a9979aa.png)
 
 **Receitas**
+
 ![image](https://user-images.githubusercontent.com/35302072/178387554-3e58b1e3-cd23-4b4e-b6e3-7edd7a0ffadb.png)
 
 **Despesas**
+
 ![image](https://user-images.githubusercontent.com/35302072/178387602-6e9a0fb3-fea7-4e06-bbcd-02b9dcf2a036.png)
 
 **Categorias**
+
 ![image](https://user-images.githubusercontent.com/35302072/178387648-a41adef9-0902-475d-897d-cbf950a97704.png)
 
 
