@@ -24,6 +24,16 @@ Também foram utilizados:
 - Razor Pages;
 - ChartJs.
 
+## Funcionalidades:
+
+- Login/Cadastro de usuários;
+- Cadastro de carteiras como agrupadoras de receitas/despesas;
+- Cadastro de receitas/despesas por carteira;
+- Cadastro de categorias (tags) para uso e identificação de receitas/despesas;
+- Filtragem de receita/despesa por nome, categoria e data;
+- Tela de resumo contendo saldo total das carteiras, despesas e receitas do usuário;
+- Gráfico com o total de receitas/despesas do usuário.
+
 ## Telas
 
 **Login:**
